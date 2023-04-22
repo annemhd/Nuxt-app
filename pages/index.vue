@@ -1,8 +1,10 @@
 <template>
 Index
 </template>
-<script setup lang="ts">
+<script setup>
+import Module from '../services/user.vue'
 
+console.log(Module.getAllUsers())
 
 useHead({
   title: 'Index',

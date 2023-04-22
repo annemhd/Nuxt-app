@@ -4,59 +4,45 @@ import axios from 'axios'
 const userService = axios.create({ baseURL: 'http://localhost:8080'});
 
 export default {
-     getAllUsers: async ()=> {
-        try {
-            const response = await userService.get('API/user');
-            console.log(response.data);
-        } catch (e) {
-            console.log(e)
-        }
+     getAllUsers: ()=> {
+        userService.get('API/user');
     },
 
-    findUser: async ()=> {
-        try {
-            const response = await userService.get('API/user');
-            console.log(response.data);
-        } catch (e) {
-            console.log(e)
-        }
+    findUser: (id)=> {
+        userService.get(`API/user/${id}`);
     },
 
-    createUser: async (firstname, lastname, email, password) => {
-        try {
-            const response = await userService.post('API/user', {
-                firstname: firstname,
-                lastname: lastname,
-                email: email,
-                password: password
-            });
-            console.log(response.data);
-        } catch (e) {
-            console.log(e)
+    createUser: (firstname, lastname, email, password) => {
+        userService.post('API/user', {
+            firstname: firstname,
+            lastname: lastname,
+            email: email,
+            password: password,
+        }, 
+        {
+            headers: {
+            'Content-Type': 'multipart/form-data'
+            }
         }
+    );
     },
 
-    updateUser: async (id)=> {
-        try {
-            const response = await userService.put(`API/user/${id}/update`, {
-                firstname: firstname,
-                lastname: lastname,
-                email: email,
-                password: password
-            });
-            console.log(response.data);
-        } catch (e) {
-            console.log(e)
-        }
+    updateUser: async (id, firstname, lastname, email, password)=> {
+        await userService.put(`API/user/${id}/update`, {
+            firstname: firstname,
+            lastname: lastname,
+            email: email,
+            password: password,
+        }, 
+        {
+            headers: {
+            'Content-Type': 'multipart/form-data'
+            }
+        });
     },
 
-    deleteUser: async ()=> {
-        try {
-            const response = await userService.delete(`API/user/${id}/delete`);
-            console.log(response.data);
-        } catch (e) {
-            console.log(e)
-        }
+    deleteUser: (id)=> {
+        userService.delete(`API/user/${id}/delete`);
     }
 }
 

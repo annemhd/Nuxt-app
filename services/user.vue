@@ -4,8 +4,9 @@ import axios from 'axios'
 const userService = axios.create({ baseURL: 'http://localhost:8080'});
 
 export default {
-     getAllUsers: ()=> {
-        userService.get('API/user');
+     getAllUsers: async ()=> {
+        const response = await userService.get('API/user');
+        return response.data
     },
 
     findUser: (id)=> {

@@ -1,18 +1,16 @@
 <template>
-  <div>
+  <header>
+    <h1>Nuxt Application</h1>
+  </header>
 
+    <nav>
+      <ul>
+        <li><NuxtLink to="/">Index</NuxtLink></li>
+        <li><NuxtLink to="/about">About</NuxtLink></li>
+      </ul>
+    </nav>
+
+  <div>
+    <NuxtPage />
   </div>
 </template>
-<script setup>
-import axios from 'axios'
-
-async function getUser() {
-  try {
-    const response = await axios.get('http://localhost:8080/API/user');
-    console.log(response);
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-</script>

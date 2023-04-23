@@ -3,7 +3,7 @@
         <el-input v-model="email" type="text" name="email" placeholder="Email" class="mb-2" :validate-event="false"/>
         <el-input v-model="password" type="password" name="password" placeholder="Mot de passe" class="mb-4"/>
         <div class="flex justify-center">
-            <el-button type="primary" :disabled="disabled">Se connecter</el-button>
+            <el-button type="primary" size="large" :disabled="disabled">Se connecter</el-button>
         </div>
     </el-form>
 </template>

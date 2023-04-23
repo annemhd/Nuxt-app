@@ -1,25 +1,16 @@
 <template>
     <form @submit="submitForm" >
-        <fieldset >
-            <legend>Inscription</legend>
-            <label for="firstname">Prénom</label><br>
-            <input v-model="firstname" type="text" name="firstname" /><br>
-            <label for="lastname">Nom</label><br>
-            <input v-model="lastname" type="text" name="lastname"><br>
-            <label for="email">email</label><br>
-            <input v-model="email" type="text" name="email"><br>
-            <label for="password">password</label><br>
-            <input v-model="password" type="password" name="password"><br>
-            <label for="passwordConfirmation">password</label><br>
-            <input v-model="passwordConfirmation" type="passwordConfirmation" name="passwordConfirmation"><br>
-            <br>
-            <button>S'inscrire</button>
-            <p v-if="errors.length">
-                <ul>
-                    <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
-                </ul>
-            </p>
-        </fieldset>
+        <el-input v-model="firstname" type="text" name="firstname" placeholder="Prénom" class="mb-2"/><br>
+        <el-input v-model="lastname" type="text" name="lastname" placeholder="Nom" class="mb-2"/><br>
+        <el-input v-model="email" type="text" name="email" placeholder="Email" class="mb-2"/><br>
+        <el-input v-model="password" type="password" name="password" placeholder="Mot de passe" class="mb-2"/><br>
+        <el-input v-model="passwordConfirmation" type="passwordConfirmation" name="passwordConfirmation"  placeholder="Confirmation du mot de passe" class="mb-2"/><br>
+        <!-- <el-button type="primary">S'inscrire</el-button> -->
+        <p v-if="errors.length">
+            <ul>
+                <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
+            </ul>
+        </p>
     </form>
 </template>
 <script setup>

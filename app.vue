@@ -17,9 +17,11 @@
     </el-container>
     <!-- Dialog -->
     <el-dialog v-model="openDialog" width="400" :destroy-on-close="true">
-      <template #header>Connecte-toi ou crée ton compte</template>
-      <p>{{ handleDescription }}</p>
-        <el-tabs v-model="activeName" class="mb-4">
+      <article class="text-center">
+        <h2 class="text-2xl">Connecte-toi ou crée ton compte</h2>
+        <p class="mb-4">{{ handleDescription }}</p>
+      </article>
+        <el-tabs v-model="activeName" :stretch="true">
           <el-tab-pane label="Connexion" name="signIn">
             <SignInForm />
           </el-tab-pane>
@@ -27,12 +29,6 @@
             <SignUpForm />
           </el-tab-pane>
         </el-tabs>
-      
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button type="primary" @click="openDialog = false">{{ handleButton }}</el-button>
-        </span>
-      </template>
     </el-dialog>
 </template>
 <script setup>
@@ -43,8 +39,5 @@ const activeName = ref('signIn')
 const openDialog = ref(false)
 const handleDescription = computed(() => {
   return activeName.value === 'signIn' ? 'Saisie tes identifiant afin d\'accéder à ton espace' : 'Saisie tes informations afin de créer un compte'
-})
-const handleButton = computed(() => {
-  return activeName.value === 'signIn' ? 'Se connecter' : 'S\'inscrire'
 })
 </script>

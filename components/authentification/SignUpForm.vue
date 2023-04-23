@@ -44,7 +44,7 @@ const submitForm = (e) => {
     !validEmail(email.value) ? errors.value.push('L\'email est invalide') : null
     !password.value ? errors.value.push('Saissisez un mot de passe') : null
     !validPassword(password.value) ? errors.value.push('Le mot de passe doit être de 8 caractères minimum, contenir 1 majuscule minimum et 1 chiffre minimum') : null
-    !passwordConfirmation.value ? errors.value.push('Les mot de passe sont différents') : null
+    passwordConfirmation.value !== password.value ? errors.value.push('Les mots de passe sont différents') : null
     !errors.value.length ? true : false
     e.preventDefault()
     if (errors.value.length === 0) {

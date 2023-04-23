@@ -1,22 +1,22 @@
 <template>
-    <form @submit="submitForm" >
-        <el-input v-model="firstname" type="text" name="firstname" placeholder="Prénom" class="mb-2"/><br>
-        <el-input v-model="lastname" type="text" name="lastname" placeholder="Nom" class="mb-2"/><br>
-        <el-input v-model="email" type="text" name="email" placeholder="Email" class="mb-2"/><br>
-        <el-input v-model="password" type="password" name="password" placeholder="Mot de passe" class="mb-2"/><br>
-        <el-input v-model="passwordConfirmation" type="passwordConfirmation" name="passwordConfirmation"  placeholder="Confirmation du mot de passe" class="mb-2"/><br>
-        <!-- <el-button type="primary">S'inscrire</el-button> -->
-        <p v-if="errors.length">
-            <ul>
-                <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
-            </ul>
-        </p>
-    </form>
+    <el-input v-model="firstname" type="text" name="firstname" placeholder="Prénom" class="mb-2"/>
+    <el-input v-model="lastname" type="text" name="lastname" placeholder="Nom" class="mb-2"/>
+    <el-input v-model="email" type="text" name="email" placeholder="Email" class="mb-2"/>
+    <el-input v-model="password" type="password" name="password" placeholder="Mot de passe" class="mb-2"/>
+    <el-input v-model="passwordConfirmation" type="passwordConfirmation" name="passwordConfirmation"  placeholder="Confirmation du mot de passe" class="mb-2"/>
+    <el-button type="primary" @click="submitForm">S'inscrire</el-button>
+    <el-alert type="error">
+        <template #title>Le formulaire est invalide</template>
+        <ul class="list-disc">
+            <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
+        </ul>
+    </el-alert>
+         
 </template>
 <script setup>
 import Module from '/services/user.vue'
 
-const router = useRouter();
+// const router = useRouter();
 const errors = ref([])
 const firstname = ref(null)
 const lastname = ref(null)

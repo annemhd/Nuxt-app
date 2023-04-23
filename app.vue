@@ -1,5 +1,5 @@
 <template>
-  <el-container>
+<el-container>
     <!-- Menu -->
     <el-header>
       <el-menu :default-active="activeIndex" mode="horizontal">
@@ -13,9 +13,12 @@
     <el-main>
       <NuxtPage />
     </el-main>
+    <el-footer>footers</el-footer>
+    </el-container>
     <!-- Dialog -->
     <el-dialog v-model="openDialog" width="400" :destroy-on-close="true">
-      <template #header>
+      <template #header>Connecte-toi ou crée ton compte</template>
+      <p>{{ handleDescription }}</p>
         <el-tabs v-model="activeName" class="mb-4">
           <el-tab-pane label="Connexion" name="signIn">
             <SignInForm />
@@ -24,19 +27,24 @@
             <SignUpForm />
           </el-tab-pane>
         </el-tabs>
-      </template>
+      
       <template #footer>
         <span class="dialog-footer">
-          <el-button type="primary" @click="openDialog = false">hbvjhbhb</el-button>
+          <el-button type="primary" @click="openDialog = false">{{ handleButton }}</el-button>
         </span>
       </template>
     </el-dialog>
-  </el-container>
 </template>
 <script setup>
-  import SignInForm from '~/components/authentification/SignInFrom.vue';
-  import SignUpForm from '~/components/authentification/SignUpForm.vue';
-  const activeIndex = ref('1')
-  const activeName = ref('signIn')
-  const openDialog = ref(false)
+import SignInForm from '~/components/authentification/SignInFrom.vue';
+import SignUpForm from '~/components/authentification/SignUpForm.vue';
+const activeIndex = ref('1')
+const activeName = ref('signIn')
+const openDialog = ref(false)
+const handleDescription = computed(() => {
+  return activeName.value === 'signIn' ? 'Saisie tes identifiant afin d\'accéder à ton espace' : 'Saisie tes informations afin de créer un compte'
+})
+const handleButton = computed(() => {
+  return activeName.value === 'signIn' ? 'Se connecter' : 'S\'inscrire'
+})
 </script>

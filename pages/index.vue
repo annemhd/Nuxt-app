@@ -1,5 +1,5 @@
 <template>
-  Index
+  <p>Index</p>
 </template>
 
 <script setup>

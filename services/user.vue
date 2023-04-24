@@ -4,7 +4,7 @@ import axios from 'axios'
 const userService = axios.create({ baseURL: 'http://localhost:8080'});
 
 export default {
-     getAllUsers: async ()=> {
+     getUsers: async ()=> {
         const response = await userService.get('API/user');
         return response.data
     },
@@ -44,6 +44,10 @@ export default {
 
     deleteUser: (id)=> {
         userService.delete(`API/user/${id}/delete`);
+    },
+
+    authUser: (email, password)=> {
+        userService.get(`API/auth?email=${email}&password=${password}`);
     }
 }
 

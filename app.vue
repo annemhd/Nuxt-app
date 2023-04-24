@@ -39,7 +39,7 @@
   </el-container>
 </div>
   <!-- Dialog -->
-  <el-dialog v-model="openDialog" width="400" :destroy-on-close="true">
+  <el-dialog v-model="openDialog" width="400" :destroy-on-close="true" :close="activeName = 'signIn'">
     <article class="text-center">
       <h2 class="text-2xl">Connecte-toi ou crée ton compte</h2>
       <p class="mb-4">{{ handleDescription }}</p>
@@ -63,16 +63,3 @@ const handleDescription = computed(() => {
   return activeName.value === 'signIn' ? 'Saisie tes identifiant afin d\'accéder à ton espace' : 'Saisie tes informations afin de créer un compte'
 })
 </script>
-<style lang="scss" scoped>
-.el-menu--horizontal {
-  display: flex;
-  flex-wrap: nowrap;
-  border-bottom: none;
-  border-right: none
-}
-.menu--horizontal .el-menu-item:not(.is-disabled):hover {
-    outline: 0;
-    color: var(--el-color-primary); 
-    background-color: red;
-}
-</style>

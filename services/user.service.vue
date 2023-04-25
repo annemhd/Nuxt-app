@@ -1,5 +1,6 @@
 <script>
 import axios from 'axios'
+import MD5 from 'crypto-js/MD5';
 
 const userService = axios.create({ baseURL: 'http://localhost:8080'});
 
@@ -49,6 +50,7 @@ export default {
     },
 
     authUser: async (email, password) => {
+        password = MD5(password)
         const response = await userService.get(`API/auth?email=${email}&password=${password}`,
         {
             headers: {

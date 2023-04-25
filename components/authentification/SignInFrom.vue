@@ -8,7 +8,7 @@
     </el-form>
 </template>
 <script setup>
-import Module from '/services/user.vue'
+import Module from '/services/user.service.vue'
 const email = ref(null)
 const password = ref(null)
 const errors = ref([])

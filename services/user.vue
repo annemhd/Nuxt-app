@@ -5,12 +5,13 @@ const userService = axios.create({ baseURL: 'http://localhost:8080'});
 
 export default {
      getUsers: async ()=> {
-        const response = await userService.get('API/user');
+        const response = await userService.get('API/user')
         return response.data
     },
 
     findUser: (id)=> {
-        userService.get(`API/user/${id}`);
+        userService.get(`API/user/${id}`)
+        return response.data
     },
 
     createUser: (firstname, lastname, email, password) => {
@@ -25,7 +26,7 @@ export default {
             'Content-Type': 'multipart/form-data'
             }
         }
-    );
+        )
     },
 
     updateUser: async (id, firstname, lastname, email, password)=> {
@@ -39,15 +40,22 @@ export default {
             headers: {
             'Content-Type': 'multipart/form-data'
             }
-        });
+        }
+        )
     },
 
     deleteUser: (id)=> {
-        userService.delete(`API/user/${id}/delete`);
+        userService.delete(`API/user/${id}/delete`)
     },
 
-    authUser: (email, password)=> {
-        userService.get(`API/auth?email=${email}&password=${password}`);
+    authUser: async (email, password) => {
+        const response = await userService.get(`API/auth?email=${email}&password=${password}`,
+        {
+            headers: {
+            'Content-Type': 'multipart/form-data'
+            }
+        })
+        return response.data
     }
 }
 

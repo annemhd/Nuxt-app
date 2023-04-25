@@ -9,10 +9,8 @@
 </template>
 <script setup>
 import Module from '/services/user.vue'
-import bcrypt from 'bcryptjs'
 const email = ref(null)
 const password = ref(null)
-const hashPassword = ref(null)
 const errors = ref([])
 const disabled = computed(() => { return email.value && password.value ? false : true })
 const validEmail = (email) => {
@@ -27,12 +25,9 @@ const submitForm = (e) => {
     !errors.value.length ? true : false
     e.preventDefault()
     if (errors.value.length === 0) {
-        Module.authUser(email.value, hashPassword.value)
+        Module.authUser(email.value, password.value)
         email.value = null
         password.value =  null
     }
 }
-watch(password, (newX) => {
-    hashPassword.value = bcrypt.hashSync(newX);
-})
 </script>

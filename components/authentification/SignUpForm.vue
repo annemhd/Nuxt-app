@@ -18,7 +18,7 @@
     </div>
 </template>
 <script setup>
-import Module from '/services/user.service.vue'
+import Module from '/services/user.js'
 import { ElMessageBox } from 'element-plus'
 const popoverRef = ref()
 const errors = ref([])

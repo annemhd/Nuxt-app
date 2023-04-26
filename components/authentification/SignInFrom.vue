@@ -8,7 +8,11 @@
     </el-form>
 </template>
 <script setup>
-import Module from '/services/user.service.vue'
+import Module from '/services/user.js'
+const store = reactive({
+    user: {}
+})
+console.log(store.user)
 const email = ref(null)
 const password = ref(null)
 const errors = ref([])
@@ -25,9 +29,24 @@ const submitForm = (e) => {
     !errors.value.length ? true : false
     e.preventDefault()
     if (errors.value.length === 0) {
-        Module.authUser(email.value, password.value)
+        const user = Module.authUser(email.value, password.value)
+        user.then(response => response)
+            .then(data => {
+                store.user = data
+                // console.log(data)
+            })
+            .catch(err => {
+                console.log(err);
+            })
         email.value = null
         password.value =  null
     }
 }
+watch(store.user, (newX) => {
+    console.log(`x is ${JSON.stringify(newX)}`)
+})
+
+
+
+console.log(store.user)
 </script>

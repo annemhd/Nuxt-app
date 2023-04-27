@@ -50,9 +50,14 @@ export default {
 
     ///////
 
-    authUser: async (email, password) => {
-        password = MD5(password)
-        const response = await userService.get(`API/auth?email=${email}&password=${password}`)
+    authentification: async (email, password) => {
+        const response = await userService.get('API/users')
+        const filteredRes = response.data.filter(user => user.email === email &&  user.password === password)
+        return filteredRes
+    },
+
+    getCurrentUser: async () => {
+        const response = await userService.get('API/current-user')
         return response.data
     },
 

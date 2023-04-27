@@ -32,10 +32,6 @@
     <!-- Main -->
     <el-main>
       <NuxtPage />
-      <br>
-      <button @click="main.setCurrentUser('testcurrent', 'aa', 'aa@aa.fr', '33e2c1a41087f29306317ae6dc6cb369')">set {{ JSON.stringify(main.currentUser) }}</button> <br>
-      <button @click="main.save()">save {{ JSON.stringify(main.currentUser) }}</button> <br>
-      <button @click="main.reset">reset {{ JSON.stringify(main.currentUser) }}</button> <br>
     </el-main>
     <el-footer>
       Bas de page
@@ -50,7 +46,7 @@
     </article>
     <el-tabs v-model="activeName" :stretch="true">
       <el-tab-pane label="Connexion" name="signIn">
-        <SignInForm />
+        <SignInForm @go-to-dashboard="openDialog = false"/>
       </el-tab-pane>
       <el-tab-pane label="Inscription" name="signUp">
         <SignUpForm @confirmation-message="activeName = 'signIn'" />
@@ -61,58 +57,6 @@
 <script setup>
 import SignInForm from '~/components/authentification/SignInFrom.vue';
 import SignUpForm from '~/components/authentification/SignUpForm.vue';
-
-
-
-
-
-import Module from '/services/user.js'
-import { defineStore } from 'pinia'
-
-const useMainStore = defineStore('main', {
-  state: () => {
-    return {
-      users: Module.getUsers(),
-      currentUser:  undefined,
-    }
-  },
-    getters: {
-      setCurrentUser: (state) => (firstname, lastname, email, password) => state.currentUser = {
-            firstname: firstname,
-            lastname: lastname,
-            email: email,
-            password: password,
-        }
-  },
-  actions: {
-    save() {
-      Module.setCurrentUser(this.currentUser.firstname, this.currentUser.lastname, this.currentUser.email, this.currentUser.password)
-      console.log(this.currentUser)
-    },
-    reset() {
-      this.currentUser = undefined
-      Module.destroyCurrentUser()
-      console.log(this.currentUser)
-    },
-  },
-})
-
-const main = useMainStore()
-console.log('users : ', main.users)
-console.log('current user : ', main.currentUser)
-
-
-
-
-
-
-
-
-
-
-
-
-
 const activeName = ref('signIn')
 const openDialog = ref(false)
 const handleDescription = computed(() => {

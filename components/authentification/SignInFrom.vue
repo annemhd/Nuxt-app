@@ -1,7 +1,7 @@
 <template>
     <el-form class="mb-4">
         <el-input v-model="email" type="text" name="email" placeholder="Email" class="mb-2" :validate-event="false"/>
-        <el-input v-model="password" type="password" name="password" placeholder="Mot de passe" class="mb-4"/>
+        <el-input v-model="password" type="password" name="password" placeholder="Mot de passe" class="mb-4" show-password/>
         <div class="flex justify-center">
             <el-button type="primary" size="large" @click="submitForm" :disabled="disabled">Se connecter</el-button>
         </div>
@@ -9,10 +9,11 @@
 </template>
 <script setup>
 import Module from '/services/user.js'
-const store = reactive({
-    user: {}
-})
-console.log(store.user)
+import { useUserStore } from '~/stores/user.js'
+import crypto from 'crypto-js'
+const router = useRouter()
+const userStore = useUserStore()
+const emit = defineEmits(['goToDashboard'])
 const email = ref(null)
 const password = ref(null)
 const errors = ref([])
@@ -21,7 +22,7 @@ const validEmail = (email) => {
      const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return regex.test(email);
 }
-const submitForm = (e) => {
+const submitForm = async (e) => {
     errors.value = []
     !email.value ? errors.value.push('Saisis ton email') : null
     !validEmail(email.value) ? errors.value.push('L\'email est invalide') : null
@@ -29,24 +30,12 @@ const submitForm = (e) => {
     !errors.value.length ? true : false
     e.preventDefault()
     if (errors.value.length === 0) {
-        const user = Module.authUser(email.value, password.value)
-        user.then(response => response)
-            .then(data => {
-                store.user = data
-                // console.log(data)
-            })
-            .catch(err => {
-                console.log(err);
-            })
-        email.value = null
-        password.value =  null
+        const hashPwd = crypto.MD5(password.value).toString()
+        const user = await Module.authentification(email.value, hashPwd)
+        userStore.setCurrentUser(user[0].firstname, user[0].lastname, user[0].email, user[0].password)
+        userStore.save()
+        emit('goToDashboard')
+        router.push({ path: "/dashboard" })
     }
 }
-watch(store.user, (newX) => {
-    console.log(`x is ${JSON.stringify(newX)}`)
-})
-
-
-
-console.log(store.user)
 </script>

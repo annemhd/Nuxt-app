@@ -22,9 +22,10 @@
               <Icon name="material-symbols:groups-rounded" size="20" />
             </el-menu-item>
             <div class="flex-grow"></div>
-            <el-menu-item @click="openDialog = true">
+            <el-menu-item  @click="openDialog = true">
               <Icon name="ep:user-filled" size="20" />
             </el-menu-item>
+            <div  v-if="renderComponent" @click="userStore.reset()">isLogged</div>
           </el-menu>
         </nav>
       </el-header>
@@ -57,6 +58,14 @@
 <script setup>
 import SignInForm from '~/components/authentification/SignInFrom.vue';
 import SignUpForm from '~/components/authentification/SignUpForm.vue';
+// import { useUserStore } from '~/stores/user.js'
+// import Module from '/services/user.js'
+// const userStore = useUserStore()
+// const logout = userStore.reset()
+// const currentUser = await Module.getCurrentUser()
+// const verification = await ref(currentUser.length)
+// const isLogged = ref(true)
+// console.log(isLogged.value)
 const activeName = ref('signIn')
 const openDialog = ref(false)
 const handleDescription = computed(() => {

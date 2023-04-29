@@ -34,8 +34,8 @@ const submitForm = async (e) => {
         const user = await Module.authentification(email.value, hashPwd)
         userStore.setCurrentUser(user[0].firstname, user[0].lastname, user[0].email, user[0].password)
         userStore.save()
-        emit('goToDashboard')
-        router.push({ path: "/dashboard" })
+        // emit('goToDashboard')
+        // router.push({ path: "/dashboard" })
     }
 }
 </script>

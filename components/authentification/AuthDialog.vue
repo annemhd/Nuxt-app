@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <client-only>
     <Icon name="ep:user-filled" size="20" @click="openDialog = true" />
-    <el-dialog v-model="openDialog" width="400" :destroy-on-close="true" :close="activeName = 'signIn'">
+    <el-dialog v-model="openDialog" width="400" :destroy-on-close="true" :close="activeName = 'signIn'" >
         <article class="text-center">
         <h2 class="text-2xl">Connecte-toi ou crée ton compte</h2>
         <p class="mb-4">{{ handleDescription }}</p>
@@ -15,7 +15,7 @@
         </el-tab-pane>
         </el-tabs>
     </el-dialog>
-    </div>
+    </client-only>
 </template>
 
 <script setup>

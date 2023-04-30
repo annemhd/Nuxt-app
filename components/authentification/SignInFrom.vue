@@ -11,7 +11,6 @@
 import Module from '/services/user.js'
 import { useUserStore } from '~/stores/user.js'
 import crypto from 'crypto-js'
-const router = useRouter()
 const userStore = useUserStore()
 const emit = defineEmits(['goToDashboard'])
 const email = ref(null)
@@ -34,8 +33,6 @@ const submitForm = async (e) => {
         const user = await Module.authentification(email.value, hashPwd)
         userStore.setCurrentUser(user[0].firstname, user[0].lastname, user[0].email, user[0].password)
         userStore.save()
-        // emit('goToDashboard')
-        // router.push({ path: "/dashboard" })
     }
 }
 </script>

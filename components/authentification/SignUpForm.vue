@@ -1,5 +1,4 @@
 <template>
-    <el-form class="mb-4">
         <el-input v-model="firstname" type="text" name="firstname" placeholder="Prénom" class="mb-2"/>
         <el-input v-model="lastname" type="text" name="lastname" placeholder="Nom" class="mb-2"/>
         <el-input v-model="email" type="text" name="email" placeholder="Email" class="mb-2"/>
@@ -8,7 +7,6 @@
         <div class="flex justify-center">
             <el-button type="primary" size="large" @click="submitForm" :disabled="disabled" v-popover="popoverRef" class="mt-4">S'inscrire</el-button>
         </div>
-    </el-form>
     <div v-if="errorsAlert" class="mt-4">
         <el-alert title="Les informations saisies sont invalides" type="error">
             <ul class="list-disc list-inside">

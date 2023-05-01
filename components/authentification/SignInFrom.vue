@@ -11,12 +11,13 @@
 import Module from '/services/user.js'
 import { useUserStore } from '~/stores/user.js'
 import crypto from 'crypto-js'
+const router = useRouter()
 const userStore = useUserStore()
-const emit = defineEmits(['goToDashboard'])
 const email = ref(null)
 const password = ref(null)
 const errors = ref([])
 const disabled = computed(() => { return email.value && password.value ? false : true })
+const emit = defineEmits(['goToDashboard'])
 const validEmail = (email) => {
      const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return regex.test(email);
@@ -33,6 +34,7 @@ const submitForm = async (e) => {
         const user = await Module.authentification(email.value, hashPwd)
         userStore.setCurrentUser(user[0].firstname, user[0].lastname, user[0].email, user[0].password)
         userStore.save()
+        router.push({ path: "/dashboard" });
     }
 }
 </script>

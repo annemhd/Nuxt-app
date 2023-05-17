@@ -20,7 +20,7 @@ export default {
             lastname: lastname,
             email: email,
             password: password,
-        }, 
+        },
         {
             headers: {
             'Content-Type': 'multipart/form-data'
@@ -35,7 +35,7 @@ export default {
             lastname: lastname,
             email: email,
             password: password,
-        }, 
+        },
         {
             headers: {
             'Content-Type': 'multipart/form-data'
@@ -48,41 +48,9 @@ export default {
         userService.delete(`API/user/${id}/delete`)
     },
 
-    ///////
-
     authentification: async (email, password) => {
         const response = await userService.get('API/users')
         const filteredRes = response.data.filter(user => user.email === email &&  user.password === password)
-        return filteredRes
+        return filteredRes[0]
     },
-
-    getCurrentUser: async () => {
-        const response = await userService.get('API/current-user')
-        return response.data
-    },
-
-    setCurrentUser: (firstname, lastname, email, password) => {
-        userService.post('API/current-user/create', {
-            firstname: firstname,
-            lastname: lastname,
-            email: email,
-            password: password,
-        }, 
-        {
-            headers: {
-            'Content-Type': 'multipart/form-data'
-            }
-        }
-        )
-    },
-
-    destroyCurrentUser: () => {
-        userService.delete('API/current-user/destroy'), 
-        {
-            headers: {
-            'Content-Type': 'multipart/form-data'
-            }
-        }
-    }
 }
-

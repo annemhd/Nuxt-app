@@ -1,40 +1,35 @@
 import Module from '/services/user.js'
 import { defineStore } from 'pinia'
 
-export const useUserStore = defineStore('user', {
-  state: () => {
-    return {
-      users: Module.getUsers(),
-      currentUser:  undefined,
-    }
-  },
-  getters: {
-    setCurrentUser: (state) => (firstname, lastname, email, password) => state.currentUser = {
-          firstname: firstname,
-          lastname: lastname,
-          email: email,
-          password: password,
-      }
-  },
-  actions: {
-    save() {
-      Module.setCurrentUser(this.currentUser.firstname, this.currentUser.lastname, this.currentUser.email, this.currentUser.password)
-    },
-    reset() {
-      this.currentUser = undefined
-      Module.destroyCurrentUser()
-      console.log(this.currentUser)
-    },
-  },
+export const useUserStore = defineStore('user', () => {
+  const users = ref([])
+  const currentUser = ref(undefined)
+
+  const getAllUsers = async () => {
+    const allUsers = await Module.getUsers()
+    users.value = allUsers
+  }
+
+  const setCurrentUser = async (data) => {
+    currentUser.value = data
+    console.log(data)
+  }
+
+  const getCurrentUser = async () => {
+    const currentUser = await Module.getCurrentUser()
+    currentUser.value = currentUser
+  }
+
+  const reset = () => {
+    currentUser.value = undefined
+  }
+
+  return  {
+    users,
+    currentUser,
+    getAllUsers,
+    getCurrentUser,
+    setCurrentUser,
+    reset,
+  }
 })
-
-
-
-
-
-
-
-
-
-
-

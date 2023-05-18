@@ -50,7 +50,27 @@ export default {
 
     authentification: async (email, password) => {
         const response = await userService.get('API/users')
-        const filteredRes = response.data.filter(user => user.email === email &&  user.password === password)
+        const filteredRes = response.data.filter(user => user.email === email && user.password === password)
         return filteredRes[0]
     },
+
+    setCurrentUser: async (body) => {
+        await userService.post('API/current-user/create', {
+            id: body.id,
+            firstname: body.firstname,
+            lastname: body.lastname,
+            email: body.email,
+            password: body.password,
+        },
+        {
+            headers: {
+            'Content-Type': 'multipart/form-data'
+            }
+        })
+    },
+
+    getCurrentUser: async () => {
+        const response = await userService.get('API/current-user')
+        return response
+    }
 }

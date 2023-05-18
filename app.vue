@@ -13,31 +13,24 @@
           <Icon name="material-symbols:groups-rounded" size="20" />
         </el-menu-item>
         <div class="flex-grow"></div>
-        <div class="flex items-center cursor-pointer">
+        <div v-if="user === undefined" class="flex items-center cursor-pointer">
           <AuthDialog />
-          <!-- <NuxtLink to="/login">Loooog</NuxtLink> -->
         </div>
-        <!-- <div class="flex flex-row">
-          <div class="flex items-center mr-8 text-gray-300 cursor-not-allowed">
-            <Icon name="material-symbols:mail" size="20" />
-          </div>
-          <div class="flex items-center mr-8 text-gray-300 cursor-not-allowed">
-            <Icon name="material-symbols:favorite" size="20" />
-          </div>
-          <div class="flex items-center mr-4">
-            <el-dropdown trigger="click">
-              <span class="el-dropdown-link text-gray-950 hover:text-sky-400">
-                <Icon name="ep:user-filled" size="20"/>
-              </span>
-              <template #dropdown>
-                <el-dropdown-menu>
-                  <el-dropdown-item ><a :href="index[3]" handleClose>Mon compte</a></el-dropdown-item>
-                  <el-dropdown-item @click="logout">Déconnexion</el-dropdown-item>
-                </el-dropdown-menu>
-              </template>
-            </el-dropdown>
-          </div>
-        </div> -->
+        <div v-else class="flex items-center cursor-pointer">
+          <Icon name="material-symbols:favorite" size="20" class="mr-4" />
+          <Icon name="material-symbols:mail" size="20"  class="mr-4" />
+          <el-dropdown trigger="click">
+        <span class="el-dropdown-link">
+         <Icon name="ep:user-filled" size="20" />
+        </span>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item>Mon compte</el-dropdown-item>
+            <el-dropdown-item @click="loggout">Déconnexion</el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
+        </div>
       </el-menu>
     </el-header>
     <el-main>
@@ -45,17 +38,18 @@
     </el-main>
     <el-footer>
       Bas de page
-      <!-- <div>{{ token || 'no token present, are you logged in?' }}</div> -->
     </el-footer>
   </client-only>
 </div>
 </template>
 <script setup>
+import { deleteCookie } from "cookies-utils";
 import AuthDialog from '~/components/authentification/AuthDialog.vue';
-import { useUserStore } from '~/stores/user.js'
 const index = ['/', '/market', '/forum', '/dashboard']
-const userStore = useUserStore()
-const logout = () => {
-  userStore.reset()
+const u = useCookie("user")
+const user = u.value
+const loggout = () => {
+  deleteCookie("user")
+  window.location.replace("/")
 }
 </script>

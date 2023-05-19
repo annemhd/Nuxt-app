@@ -38,7 +38,8 @@ const submitForm = async (e) => {
             const secret = 'xxx';
             const token = jwt(payload, secret);
             u.value = token
-            window.location.replace("/dashboard")
+            // window.location.replace("/dashboard")
+            router.push({ path: "/dashboard" });
         } catch(e) {
             console.log('nope')
         }

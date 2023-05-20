@@ -18,4 +18,9 @@ const salutation = () => {
         return 'Bonsoir'
     }
 }
+
+useHead({
+    title: 'The Ficus - Tableau de bord',
+    meta: [{ name: 'description', content: 'My amazing site.' }],
+})
 </script>

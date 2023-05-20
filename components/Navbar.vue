@@ -49,7 +49,32 @@
 import Cookie from 'js-cookie'
 import AuthDialog from '~/components/authentification/AuthDialog.vue'
 const index = ref(['/', '/marketplace', '/forum', '/discussion', '/dashboard', '/account'])
-var defaultActive = ref(index[0])
+const router = useRouter()
+var defaultActive = computed(() => {
+    switch (router.currentRoute.value.path) {
+        case '/':
+            return index.value[0]
+            break
+        case '/marketplace':
+            return index.value[1]
+            break
+        case '/forum':
+            return index.value[2]
+            break
+        case '/discussion':
+            return index.value[3]
+            break
+        case '/dashboard':
+            return index.value[4]
+            break
+        case '/account':
+            return index.value[5]
+            break
+        default:
+            return index.value[4]
+    }
+})
+
 const cookie = useCookie('user')
 var token = cookie.value
 

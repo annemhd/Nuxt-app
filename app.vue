@@ -11,4 +11,9 @@
         </client-only>
     </div>
 </template>
-<script setup></script>
+<script setup>
+useHead({
+    title: 'The Ficus',
+    meta: [{ name: 'description', content: 'My amazing site.' }],
+})
+</script>

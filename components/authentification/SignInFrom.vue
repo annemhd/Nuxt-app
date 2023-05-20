@@ -17,7 +17,7 @@
             show-password
         />
         <div class="flex justify-center">
-            <el-button type="primary" size="large" @click="submitForm" :disabled="disabled"
+            <el-button type="primary" size="large" @click="signIn" :disabled="disabled"
                 >Se connecter</el-button
             >
         </div>
@@ -42,7 +42,7 @@ const validEmail = (email) => {
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     return regex.test(email)
 }
-const submitForm = async (e) => {
+const signIn = async (e) => {
     errors.value = []
     !email.value ? errors.value.push('Saisis ton email') : null
     !validEmail(email.value) ? errors.value.push("L'email est invalide") : null
@@ -57,8 +57,7 @@ const submitForm = async (e) => {
             const secret = 'xxx'
             const token = jwt(payload, secret)
             Cookies.set('user', token)
-            // window.location.replace("/dashboard")
-            router.push({ path: '/dashboard' })
+            window.location.replace('/dashboard')
         } catch (e) {
             console.log('nope')
         }

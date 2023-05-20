@@ -1,9 +1,10 @@
 <template>
     <el-menu
-        :default-active="index[0]"
+        :default-active="defaultActive"
         mode="horizontal"
         :ellipsis="false"
         :router="true"
+        menu-trigger="click"
         class="h-12"
     >
         <el-menu-item :index="index[0]">
@@ -16,53 +17,52 @@
             <Icon name="material-symbols:groups-rounded" size="20" />
         </el-menu-item>
         <div class="flex-grow"></div>
-        <div v-if="token === undefined" class="flex items-center cursor-pointer">
-            <AuthDialog />
-        </div>
-        <div v-else class="flex items-center cursor-pointer">
-            <Icon name="material-symbols:favorite" size="20" class="mr-4" />
-            <Icon name="material-symbols:mail" size="20" class="mr-4" />
-            <Icon name="material-symbols:space-dashboard" size="20" class="mr-4" />
-            <el-dropdown trigger="click">
-                <span class="el-dropdown-link">
-                    <Icon name="ep:user-filled" size="20" />
-                </span>
-                <template #dropdown>
-                    <el-dropdown-menu class="flex flex-col min-w-44">
-                        <span class="px-4 py-2 text-sm"
-                            >{{ salutation() }} {{ user.firstname }} !</span
-                        >
-                        <el-dropdown-item>Mon compte</el-dropdown-item>
-                        <el-dropdown-item @click="loggout">Déconnexion</el-dropdown-item>
-                    </el-dropdown-menu>
-                </template>
-            </el-dropdown>
-        </div>
+        <el-menu-item v-if="token === undefined">
+            <AuthDialog class="flex items-center cursor-pointer" />
+        </el-menu-item>
+        <el-menu-item v-if="token !== undefined" :index="index[3]" disabled>
+            <el-button link
+                ><el-badge :value="undefined"
+                    ><Icon name="material-symbols:mail" size="20" class="text-black" /></el-badge
+            ></el-button>
+        </el-menu-item>
+        <el-sub-menu v-if="token !== undefined" index="1">
+            <template #title><Icon name="material-symbols:person-rounded" size="20" /></template>
+            <el-menu-item :index="index[4]"
+                ><Icon name="material-symbols:space-dashboard" size="20" class="mr-2" />Tableau de
+                bord</el-menu-item
+            >
+            <el-menu-item :index="index[5]"
+                ><Icon name="material-symbols:account-box" size="20" class="mr-2" />Mes
+                infos</el-menu-item
+            >
+            <el-menu-item @click="signOut"
+                ><span class="text-rose-400"
+                    ><Icon name="material-symbols:logout" size="20" class="mr-2" />Déconnexion</span
+                ></el-menu-item
+            >
+        </el-sub-menu>
     </el-menu>
 </template>
 
 <script setup>
-import jwt_decode from 'jwt-decode'
 import Cookie from 'js-cookie'
 import AuthDialog from '~/components/authentification/AuthDialog.vue'
-const index = ['/', '/market', '/forum', '/dashboard']
+const index = ref(['/', '/marketplace', '/forum', '/discussion', '/dashboard', '/account'])
+var defaultActive = ref(index[0])
 const cookie = useCookie('user')
 var token = cookie.value
-var user = undefined
-if (token) {
-    user = jwt_decode(token)
-}
-const loggout = () => {
+
+const signOut = () => {
     Cookie.remove('user')
     window.location.replace('/')
 }
-var heure = new Date().getHours()
-
-const salutation = () => {
-    if (heure >= 5 && heure < 12) {
-        return 'Bonjour'
-    } else {
-        return 'Bonsoir'
-    }
-}
 </script>
+<style>
+.el-sub-menu .el-sub-menu__icon-arrow {
+    display: none;
+}
+.el-sub-menu__title {
+    padding-right: 20px;
+}
+</style>

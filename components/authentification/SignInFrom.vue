@@ -59,7 +59,7 @@ const signIn = async (e) => {
             Cookies.set('user', token)
             window.location.replace('/dashboard')
         } catch (e) {
-            console.log('nope')
+            console.log('error !')
         }
     }
 }

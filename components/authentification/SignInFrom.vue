@@ -26,10 +26,9 @@
 <script setup>
 import Cookies from 'js-cookie'
 import jwt from 'jwt-encode'
-import Module from '/services/user.js'
+import Module from '/services/users.service.js'
 import crypto from 'crypto-js'
 
-const router = useRouter()
 const email = ref(null)
 const password = ref(null)
 const errors = ref([])

@@ -52,7 +52,7 @@
     </el-form>
 </template>
 <script setup>
-import Module from '/services/user.js'
+import Module from '/services/users.service.js'
 import { ElMessageBox } from 'element-plus'
 const popoverRef = ref()
 const errors = ref([])

@@ -1,5 +1,5 @@
 <template>
-    <span class="text-4xl"> {{ salutation }} {{ store.currentUser.firstname }} ! </span>
+    <span class="text-4xl"> {{ salutation }} {{ currentUser.firstname }} ! </span>
     <AddArticleDialog />
     <el-row class="gap-8 mt-4">
         <el-col v-for="article in articles" :key="article" :span="5">
@@ -17,10 +17,9 @@ import { useUserStore } from '/stores/users.store.js'
 import AddArticleDialog from '~/components/AddArticleDialog.vue'
 
 const store = useUserStore()
+const currentUser = store.currentUser
 
 const articles = await Module.getArticles()
-
-console.log(store)
 
 const handleDateFormat = (date) => {
     const dateTime = new Date(date)

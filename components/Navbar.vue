@@ -17,9 +17,7 @@
             <Icon name="material-symbols:groups-rounded" size="20" />
         </el-menu-item>
         <div class="flex-grow"></div>
-        <el-menu-item v-if="token === undefined">
-            <AuthDialog class="flex items-center cursor-pointer" />
-        </el-menu-item>
+            <AuthDialog v-if="token === undefined"/>
         <el-menu-item v-if="token !== undefined" :index="index[3]" disabled>
             <el-button link
                 ><el-badge :value="undefined"

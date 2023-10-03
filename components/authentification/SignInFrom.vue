@@ -1,11 +1,11 @@
 <template>
-    <el-form class="flex flex-col mb-4">
+    <el-form class="grid grid-cols-2 gap-2">
         <el-input
             v-model="email"
             type="text"
             name="email"
             placeholder="Email"
-            class="mb-2"
+            class="col-span-2"
             :validate-event="false"
         />
         <el-input
@@ -13,10 +13,10 @@
             type="password"
             name="password"
             placeholder="Mot de passe"
-            class="mb-4"
+            class="col-span-2"
             show-password
         />
-        <div class="flex justify-center">
+        <div class="flex justify-center col-span-2 mt-3">
             <el-button type="primary" size="large" @click="signIn" :disabled="disabled"
                 >Se connecter</el-button
             >

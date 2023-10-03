@@ -1,5 +1,5 @@
 <template>
-    <span class="text-4xl"> {{ salutation }} {{ currentUser }} ! </span>
+    <span class="text-4xl"> {{ salutation }} {{ currentUser.firstname }} ! </span>
     <AddArticleDialog />
     <el-row class="gap-8 mt-4">
         <el-col v-for="article in articles" :key="article" :span="5">
@@ -12,14 +12,17 @@
     </el-row>
 </template>
 <script setup>
-import Module from '/services/articles.service.js'
-import { useUserStore } from '/stores/users.store.js'
+    
 import AddArticleDialog from '~/components/AddArticleDialog.vue'
+import jwt_decode from 'jwt-decode'
+import Module from '/services/articles.service.js'
 
-const currentUser = useUserStore()
+
+const cookie = useCookie('user')
+const token = cookie.value
+const currentUser = jwt_decode(token)
+// const currentUser = useUserStore()
 const articles = await Module.getArticles()
-
-console.log(currentUser)
 
 const handleDateFormat = (date) => {
     const dateTime = new Date(date)

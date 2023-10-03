@@ -1,27 +1,21 @@
 <template>
-    <el-form class="flex flex-col mb-4">
+    <el-form class="grid grid-cols-2 gap-2">
         <el-input
             v-model="username"
             type="text"
             name="username"
             placeholder="Nom d'utilisateur"
-            class="mb-2"
+            class="col-span-2"
         />
-        <el-input
-            v-model="firstname"
-            type="text"
-            name="firstname"
-            placeholder="Prénom"
-            class="mb-2"
-        />
-        <el-input v-model="lastname" type="text" name="lastname" placeholder="Nom" class="mb-2" />
-        <el-input v-model="email" type="text" name="email" placeholder="Email" class="mb-2" />
+        <el-input v-model="firstname" type="text" name="firstname" placeholder="Prénom" class="" />
+        <el-input v-model="lastname" type="text" name="lastname" placeholder="Nom" class="" />
+        <el-input v-model="email" type="text" name="email" placeholder="Email" class="col-span-2" />
         <el-input
             v-model="password"
             type="password"
             name="password"
             placeholder="Mot de passe"
-            class="mb-2"
+            class="col-span-2"
             show-password
         />
         <el-input
@@ -29,16 +23,17 @@
             type="password"
             name="passwordConfirmation"
             placeholder="Confirmation du mot de passe"
+            class="col-span-2"
             show-password
         />
-        <div class="flex justify-center">
+        <div class="flex justify-center col-span-2 mt-3">
             <el-button
                 type="primary"
                 size="large"
                 @click="submitForm"
                 :disabled="disabled"
                 v-popover="popoverRef"
-                class="mt-4"
+                class=""
                 >S'inscrire</el-button
             >
         </div>

@@ -17,8 +17,13 @@
 </template>
 <script setup>
 import Module from '/services/articles.service.js'
-import { useUserStore } from '/stores/users.store.js'
-const currentUser = useUserStore().currentUser
+// import { useUserStore } from '/stores/users.store.js'
+import jwt_decode from 'jwt-decode'
+
+const cookie = useCookie('user')
+const token = cookie.value
+const currentUser = jwt_decode(token)
+
 const openDialog = ref(false)
 const errors = ref([])
 const switchRef = ref('online')
@@ -32,7 +37,7 @@ const addArticle = async (e) => {
     !description.value ? errors.value.push('Saisis une description') : null
 
     !errors.value.length ? true : false
-    e.preventDefault()
+    //e.preventDefault()
     if (errors.value.length === 0) {
         try {
             const status = switchRef.value

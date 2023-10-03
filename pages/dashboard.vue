@@ -34,12 +34,12 @@ onMounted(async () => {
 
 const getArticles = async () => {
     const data = await Module.getArticles()
-    dataTest.value = data
+    dataTest.value = data.filter((item) => item.id_user === currentUser.id_user)
 }
 
 const refreshArticles = async () => {
     const data = await Module.getArticles()
-    dataTest.value = data
+    dataTest.value = data.filter((item) => item.id_user === currentUser.id_user)
     setTimeout(() => {
         getArticles()
     }, 1000)

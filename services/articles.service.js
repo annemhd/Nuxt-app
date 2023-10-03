@@ -31,7 +31,7 @@ export default {
         )
     },
 
-    updateUser: async (title, description, price, status) => {
+    updateArticle: async (title, description, price, status) => {
         await articleService.patch(
             `API/article/${id}/update`,
             {
@@ -48,7 +48,7 @@ export default {
         )
     },
 
-    deleteUser: (id) => {
-        articleService.delete(`API/article/${id}/delete`)
+    deleteArticle: async (id) => {
+        await articleService.delete(`API/article/${id}/delete`)
     },
 }

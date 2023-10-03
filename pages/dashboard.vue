@@ -1,24 +1,32 @@
 <template>
-    <span class="text-4xl"> {{ salutation }} {{ currentUser.firstname }} ! </span>
-    <AddArticleDialog />
-    <el-row class="gap-8 mt-4">
-        <el-col v-for="article in articles" :key="article" :span="5">
-            <el-card class="box-card flex">
-                <div class="font-semibold">{{ article.title }}</div>
-                <div class="">{{ article.description }}</div>
-                <div class="text-sm">Le {{ handleDateFormat(article.created_at) }}</div>
+    <div class="flex items-center gap-4 justify-between mb-6">
+        <span class="text-4xl"> {{ salutation }} {{ currentUser.firstname }} ! </span>
+        <AddArticleDialog />
+    </div>
+    <el-row :gutter="16">
+        <el-col v-for="article in articles" :key="article" :span="6" class="mb-4">
+            <el-card>
+                <div class="">
+                    <div class="font-semibold">{{ article.title }}</div>
+                    <div class="">{{ article.description }}</div>
+                    <div class="text-sm">Le {{ handleDateFormat(article.created_at) }}</div>
+                </div>
+                <DeleteArticleDialog :article-infos="article" />
             </el-card>
         </el-col>
     </el-row>
 </template>
 <script setup>
 import AddArticleDialog from '~/components/AddArticleDialog.vue'
+import DeleteArticleDialog from '~/components/DeleteArticleDialog.vue'
+
 import jwt_decode from 'jwt-decode'
 import Module from '/services/articles.service.js'
 
-const store = useUserStore()
-const currentUser = store.currentUser
-
+const cookie = useCookie('user')
+const token = cookie.value
+const currentUser = jwt_decode(token)
+// const currentUser = useUserStore()
 const articles = await Module.getArticles()
 
 const handleDateFormat = (date) => {
@@ -59,8 +67,15 @@ const convertirMoisEnString = (mois) => {
     return moisEnString[mois]
 }
 </script>
-<style>
-.el-card .el-card__body {
-    min-height: 150px !important;
+<style lang="scss">
+.el-card {
+    &__body {
+        min-height: 150px !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    &__content {
+    }
 }
 </style>

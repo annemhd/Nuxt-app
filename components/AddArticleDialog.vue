@@ -1,5 +1,5 @@
 <template>
-    <el-button @click="openDialog = true">ajouter un article</el-button>
+    <el-button @click="openDialog = true">Ajouter un article</el-button>
     <el-dialog v-model="openDialog" title="Ajouter un article" width="400" :destroy-on-close="true">
         <el-input v-model="title" type="text" placeholder="Titre" class="mb-2" />
         <el-input
@@ -12,7 +12,7 @@
         />
         <el-input v-model="price" type="text" placeholder="Prix" class="mb-2" />
         <el-switch v-model="switchRef" active-value="online" inactive-value="offline" />
-        <el-button @click="addArticle()">ajouter</el-button>
+        <el-button @click="addArticle()">Ajouter</el-button>
     </el-dialog>
 </template>
 <script setup>

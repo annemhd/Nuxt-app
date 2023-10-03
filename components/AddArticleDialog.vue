@@ -17,7 +17,6 @@
 </template>
 <script setup>
 import Module from '/services/articles.service.js'
-// import { useUserStore } from '/stores/users.store.js'
 import jwt_decode from 'jwt-decode'
 
 const cookie = useCookie('user')
@@ -30,14 +29,15 @@ const switchRef = ref('online')
 const title = ref(null)
 const description = ref(null)
 const price = ref(null)
-const addArticle = async (e) => {
+const emit = defineEmits(['refresh'])
+
+const addArticle = async () => {
     errors.value = []
     !title.value ? errors.value.push('Saisis un titre') : null
     !description.value ? errors.value.push('Saisis une description') : null
     !description.value ? errors.value.push('Saisis une description') : null
 
     !errors.value.length ? true : false
-    //e.preventDefault()
     if (errors.value.length === 0) {
         try {
             const status = switchRef.value
@@ -48,6 +48,8 @@ const addArticle = async (e) => {
                 price.value,
                 status
             )
+            emit('refresh')
+            openDialog.value = false
         } catch (e) {
             console.log('error !')
         }

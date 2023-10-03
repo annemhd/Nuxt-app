@@ -1,7 +1,7 @@
 <template>
     <div class="flex items-center gap-4 justify-between mb-6">
         <span class="text-4xl"> {{ salutation }} {{ currentUser.firstname }} ! </span>
-        <AddArticleDialog />
+        <AddArticleDialog @refresh="refreshArticles()" />
     </div>
     <el-row :gutter="16">
         <el-col v-for="article in dataTest" :key="article" :span="6" class="mb-4">

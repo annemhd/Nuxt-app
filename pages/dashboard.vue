@@ -4,14 +4,14 @@
         <AddArticleDialog />
     </div>
     <el-row :gutter="16">
-        <el-col v-for="article in articles" :key="article" :span="6" class="mb-4">
+        <el-col v-for="article in dataTest" :key="article" :span="6" class="mb-4">
             <el-card>
                 <div class="">
                     <div class="font-semibold">{{ article.title }}</div>
                     <div class="">{{ article.description }}</div>
                     <div class="text-sm">Le {{ handleDateFormat(article.created_at) }}</div>
                 </div>
-                <DeleteArticleDialog :article-infos="article" />
+                <DeleteArticleDialog :article-infos="article" @refresh="refreshArticles()" />
             </el-card>
         </el-col>
     </el-row>
@@ -26,8 +26,24 @@ import Module from '/services/articles.service.js'
 const cookie = useCookie('user')
 const token = cookie.value
 const currentUser = jwt_decode(token)
-// const currentUser = useUserStore()
-const articles = await Module.getArticles()
+const dataTest = ref([])
+
+onMounted(async () => {
+    getArticles()
+})
+
+const getArticles = async () => {
+    const data = await Module.getArticles()
+    dataTest.value = data
+}
+
+const refreshArticles = async () => {
+    const data = await Module.getArticles()
+    dataTest.value = data
+    setTimeout(() => {
+        getArticles()
+    }, 1000)
+}
 
 const handleDateFormat = (date) => {
     const dateTime = new Date(date)

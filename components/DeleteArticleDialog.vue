@@ -26,13 +26,15 @@
 <script setup>
 import Module from '/services/articles.service.js'
 
+let openDialog = ref(false)
 const props = defineProps(['articleInfos'])
-
-const openDialog = ref(false)
+const emit = defineEmits(['refresh'])
 
 const delArticle = async (id) => {
     try {
         Module.deleteArticle(id)
+        openDialog = false
+        emit('refresh')
     } catch (e) {
         console.log(e)
     }

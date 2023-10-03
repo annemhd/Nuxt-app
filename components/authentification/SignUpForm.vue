@@ -7,9 +7,27 @@
             placeholder="Nom d'utilisateur"
             class="col-span-2"
         />
-        <el-input v-model="firstname" type="text" name="firstname" placeholder="Prénom" class="" />
-        <el-input v-model="lastname" type="text" name="lastname" placeholder="Nom" class="" />
-        <el-input v-model="email" type="text" name="email" placeholder="Email" class="col-span-2" />
+        <el-row :gutter="8">
+            <el-col :span="12">
+                <el-input
+                    v-model="firstname"
+                    type="text"
+                    name="firstname"
+                    placeholder="Prénom"
+                    class="mb-2"
+                />
+            </el-col>
+            <el-col :span="12">
+                <el-input
+                    v-model="lastname"
+                    type="text"
+                    name="lastname"
+                    placeholder="Nom"
+                    class="mb-2"
+                />
+            </el-col>
+        </el-row>
+        <el-input v-model="email" type="text" name="email" placeholder="Email" class="mb-2" />
         <el-input
             v-model="password"
             type="password"

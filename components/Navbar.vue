@@ -17,16 +17,14 @@
             <Icon name="material-symbols:groups-rounded" size="20" />
         </el-menu-item>
         <div class="flex-grow"></div>
-        <el-menu-item v-if="token === undefined">
-            <AuthDialog class="flex items-center cursor-pointer" />
-        </el-menu-item>
-        <el-menu-item v-if="token !== undefined" :index="index[3]" disabled>
+            <AuthDialog v-if="!validToken"/>
+        <el-menu-item v-if="validToken " :index="index[3]" disabled>
             <el-button link
                 ><el-badge :value="undefined"
                     ><Icon name="material-symbols:mail" size="20" class="text-black" /></el-badge
             ></el-button>
         </el-menu-item>
-        <el-sub-menu v-if="token !== undefined" index="1">
+        <el-sub-menu v-if="validToken" index="1">
             <template #title><Icon name="material-symbols:person-rounded" size="20" /></template>
             <el-menu-item :index="index[4]"
                 ><Icon name="material-symbols:space-dashboard" size="20" class="mr-2" />Tableau de
@@ -51,8 +49,9 @@ import AuthDialog from '~/components/authentification/AuthDialog.vue'
 
 const index = ref(['/', '/marketplace', '/forum', '/discussion', '/dashboard', '/account'])
 const router = useRouter()
-const cookie = useCookie('user')
-const token = cookie.value
+const token = useCookie('user')
+
+const validToken = computed(() => token.value !== undefined ? true : false)
 
 const defaultActive = computed(() => {
     switch (router.currentRoute.value.path) {

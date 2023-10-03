@@ -12,16 +12,13 @@
     </el-row>
 </template>
 <script setup>
-    
 import AddArticleDialog from '~/components/AddArticleDialog.vue'
 import jwt_decode from 'jwt-decode'
 import Module from '/services/articles.service.js'
 
+const store = useUserStore()
+const currentUser = store.currentUser
 
-const cookie = useCookie('user')
-const token = cookie.value
-const currentUser = jwt_decode(token)
-// const currentUser = useUserStore()
 const articles = await Module.getArticles()
 
 const handleDateFormat = (date) => {

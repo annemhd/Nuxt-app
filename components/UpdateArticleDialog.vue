@@ -21,7 +21,7 @@
             :resize="none"
         />
         <el-input v-model="price" type="text" placeholder="Prix" class="mb-2" />
-        <el-switch v-model="switchRef" active-value="online" inactive-value="offline" />
+        <el-switch v-model="status" active-value="online" inactive-value="offline" />
         <el-button @click.prevent="updateArticle()">Modifier</el-button>
     </el-dialog>
 </template>
@@ -36,25 +36,20 @@ const currentUser = jwt_decode(token)
 let openDialog = ref(false)
 const errors = ref([])
 
-const switchRef = ref('offline')
 const title = ref(null)
 const description = ref(null)
 const price = ref(null)
+const status = ref(null)
 
 const emit = defineEmits(['refresh'])
 const props = defineProps(['articleInfos'])
-
-// watch(props, () => {
-//     title.value = props.articleInfos.title
-//     description.value = props.articleInfos.description
-//     price.value = props.articleInfos.price
-// })
 
 onMounted(() => {
     setTimeout(() => {
         title.value = props.articleInfos.title
         description.value = props.articleInfos.description
         price.value = props.articleInfos.price
+        status.value = props.articleInfos.status
     }, 1000)
 })
 
@@ -67,13 +62,12 @@ const updateArticle = async () => {
     !errors.value.length ? true : false
     if (errors.value.length === 0) {
         try {
-            const status = switchRef.value
             Module.updateArticle(
                 props.articleInfos.id_article,
                 title.value,
                 description.value,
                 price.value,
-                status
+                status.value
             )
             emit('refresh')
             openDialog.value = false

@@ -11,15 +11,15 @@
                     <div class="">{{ article.description }}</div>
                     <div class="text-sm">Le {{ handleDateFormat(article.created_at) }}</div>
                 </div>
-                <DeleteArticleDialog :article-infos="article" @refresh="refreshArticles()" />
+                <div class="flex flex-row gap-2">
+                    <DeleteArticleDialog :article-infos="article" @refresh="refreshArticles()" />
+                    <UpdateArticleDialog :article-infos="article" @refresh="refreshArticles()" />
+                </div>
             </el-card>
         </el-col>
     </el-row>
 </template>
 <script setup>
-import AddArticleDialog from '~/components/AddArticleDialog.vue'
-import DeleteArticleDialog from '~/components/DeleteArticleDialog.vue'
-
 import jwt_decode from 'jwt-decode'
 import Module from '/services/articles.service.js'
 

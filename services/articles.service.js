@@ -31,8 +31,8 @@ export default {
         )
     },
 
-    updateArticle: async (title, description, price, status) => {
-        await articleService.patch(
+    updateArticle: async (id, title, description, price, status) => {
+        await articleService.put(
             `API/article/${id}/update`,
             {
                 title: title,

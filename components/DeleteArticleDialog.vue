@@ -14,7 +14,6 @@
         <p class="mb-4 text-center">
             Es-tu sûre de vouloir supprimer
             <span class="font-bold">{{ props.articleInfos.title }}</span>
-            {{ props.articleInfos.id_article }}
         </p>
         <div class="flex justify-center">
             <el-button type="danger" @click.prevent="delArticle(props.articleInfos.id_article)"

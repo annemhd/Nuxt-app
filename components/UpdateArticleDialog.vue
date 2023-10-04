@@ -11,18 +11,27 @@
         width="400"
         :destroy-on-close="true"
     >
+        <p class="my-2">Titre</p>
         <el-input v-model="title" type="text" placeholder="Titre" class="mb-2" />
+        <p class="my-2">Description</p>
         <el-input
             v-model="description"
             type="textarea"
             placeholder="Description"
             class="mb-2"
+            :rows="6"
             :autosize="false"
             :resize="none"
         />
+        <p class="my-2">prix</p>
         <el-input v-model="price" type="text" placeholder="Prix" class="mb-2" />
-        <el-switch v-model="status" active-value="online" inactive-value="offline" />
-        <el-button @click.prevent="updateArticle()">Modifier</el-button>
+        <div class="flex gap-2 items-center justify-center mr-4">
+            <p class="my-2">Mettre l'article en ligne</p>
+            <el-switch v-model="status" active-value="online" inactive-value="offline" />
+        </div>
+        <div class="flex justify-center mt-4">
+            <el-button type="primary" @click.prevent="updateArticle()">Modifier</el-button>
+        </div>
     </el-dialog>
 </template>
 <script setup>

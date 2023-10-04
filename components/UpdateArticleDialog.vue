@@ -44,6 +44,20 @@ const price = ref(null)
 const emit = defineEmits(['refresh'])
 const props = defineProps(['articleInfos'])
 
+// watch(props, () => {
+//     title.value = props.articleInfos.title
+//     description.value = props.articleInfos.description
+//     price.value = props.articleInfos.price
+// })
+
+onMounted(() => {
+    setTimeout(() => {
+        title.value = props.articleInfos.title
+        description.value = props.articleInfos.description
+        price.value = props.articleInfos.price
+    }, 1000)
+})
+
 const updateArticle = async () => {
     errors.value = []
     !title.value ? errors.value.push('Saisis un titre') : null

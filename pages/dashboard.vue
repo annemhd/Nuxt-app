@@ -57,7 +57,7 @@ const handleDateFormat = (date) => {
 }
 
 const heure = new Date().getHours()
-const salutation = computed(() => (heure >= 5 && heure < 12 ? 'Bonjour' : 'Bonsoir'))
+const salutation = computed(() => (heure >= 5 && heure < 12 ? 'Bonsoir' : 'Bonjour'))
 
 useHead({
     title: 'The Ficus - Tableau de bord',

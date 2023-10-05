@@ -15,12 +15,14 @@
                         type="password"
                         placeholder="Mot de passe"
                         show-password
+                        disabled
                     />
                     <el-input
                         v-model="passwordConfirmation"
                         type="password"
                         placeholder="Confirmation du mot de passe"
                         show-password
+                        disabled
                     />
                     <el-button type="primary" class="col-span-2 mt-4" @click.prevent="submitForm()"
                         >Modifier mes informations</el-button
@@ -36,7 +38,7 @@ import Module from '/services/users.service.js'
 import Cookies from 'js-cookie'
 import jwt from 'jwt-encode'
 import jwt_decode from 'jwt-decode'
-import crypto from 'crypto-js'
+//import crypto from 'crypto-js'
 
 useHead({
     title: 'The Ficus - Mon compte',
@@ -73,15 +75,16 @@ const submitForm = async () => {
     !lastname.value ? errors.value.push('Saisis ton nom') : null
     !email.value ? errors.value.push('Saisis ton email') : null
     !validEmail(email.value) ? errors.value.push("L'email est invalide") : null
-    /*!password.value ? errors.value.push('Saisis un mot de passe') : null
-    !validPassword(password.value)
-        ? errors.value.push(
-              'Le mot de passe doit être de 8 caractères minimum, contenir 1 majuscule minimum et 1 chiffre minimum'
-          )
-        : null
-    passwordConfirmation.value !== password.value
-        ? errors.value.push('Les mots de passe sont différents')
-        : null*/
+    if (password.value !== null) {
+        !validPassword(password.value) && password.value !== null
+            ? errors.value.push(
+                  'Le mot de passe doit être de 8 caractères minimum, contenir 1 majuscule minimum et 1 chiffre minimum'
+              )
+            : null
+        passwordConfirmation.value !== password.value
+            ? errors.value.push('Les mots de passe sont différents')
+            : null
+    }
     !errors.value.length ? true : false
     //e.preventDefault()
     try {
@@ -97,9 +100,9 @@ const submitForm = async () => {
             Cookies.remove('user')
             setTimeout(async () => {
                 const secret = 'xxx'
-                if (password.value !== null) {
-                    const user = await Module.authentification(email.value, password.value)
-                    console.log(user)
+                /*if (password.value !== null) {
+                    const hashPwd = crypto.MD5(password.value).toString()
+                    const user = await Module.authentification(email.value, hashPwd)
                     const payload = user
                     const token = jwt(payload, secret)
                     Cookies.set('user', token)
@@ -108,7 +111,11 @@ const submitForm = async () => {
                     const payload = user
                     const token = jwt(payload, secret)
                     Cookies.set('user', token)
-                }
+                }*/
+                const user = await Module.authentification(email.value, currentUser.password)
+                const payload = user
+                const token = jwt(payload, secret)
+                Cookies.set('user', token)
             }, 1000)
         }
     } catch (e) {

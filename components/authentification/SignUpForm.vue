@@ -78,6 +78,7 @@ const lastname = ref(null)
 const email = ref(null)
 const password = ref(null)
 const passwordConfirmation = ref(null)
+const emit = defineEmits(['confirmationMessage'])
 const disabled = computed(() => {
     return firstname.value &&
         lastname.value &&

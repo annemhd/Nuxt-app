@@ -33,6 +33,8 @@
 </template>
 <script setup>
 import Module from '/services/users.service.js'
+import Cookies from 'js-cookie'
+import jwt from 'jwt-encode'
 import jwt_decode from 'jwt-decode'
 import crypto from 'crypto-js'
 
@@ -92,6 +94,22 @@ const submitForm = async () => {
                 email.value,
                 password.value
             )
+            Cookies.remove('user')
+            setTimeout(async () => {
+                const secret = 'xxx'
+                if (password.value !== null) {
+                    const user = await Module.authentification(email.value, password.value)
+                    console.log(user)
+                    const payload = user
+                    const token = jwt(payload, secret)
+                    Cookies.set('user', token)
+                } else {
+                    const user = await Module.authentification(email.value, currentUser.password)
+                    const payload = user
+                    const token = jwt(payload, secret)
+                    Cookies.set('user', token)
+                }
+            }, 1000)
         }
     } catch (e) {
         console.log(e)

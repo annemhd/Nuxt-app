@@ -24,7 +24,11 @@
                         show-password
                         disabled
                     />
-                    <el-button type="primary" class="col-span-2 mt-4" @click.prevent="submitForm()"
+                    <el-button
+                        type="primary"
+                        class="col-span-2 mt-4"
+                        @click.prevent="submitForm()"
+                        :disabled="disabled"
                         >Modifier mes informations</el-button
                     >
                 </el-form>
@@ -57,6 +61,19 @@ const lastname = ref(currentUser.lastname)
 const email = ref(currentUser.email)
 const password = ref(null)
 const passwordConfirmation = ref(null)
+
+const disabled = computed(() =>
+    username.value !== currentUser.username ||
+    firstname.value !== currentUser.firstname ||
+    lastname.value !== currentUser.lastname ||
+    email.value !== currentUser.email
+        ? false
+        : true
+)
+
+watch(username.value, (newX) => {
+    console.log(`x is ${newX}`)
+})
 
 const validEmail = (email) => {
     const regex =

@@ -36,11 +36,6 @@
 </template>
 <script setup>
 import Module from '/services/articles.service.js'
-import jwt_decode from 'jwt-decode'
-
-const cookie = useCookie('user')
-const token = cookie.value
-const currentUser = jwt_decode(token)
 
 let openDialog = ref(false)
 const errors = ref([])

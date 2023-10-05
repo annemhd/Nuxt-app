@@ -32,21 +32,25 @@ export default {
     },
 
     updateUser: async (id, username, firstname, lastname, email, password) => {
-        await userService.patch(
-            `API/user/${id}/update`,
-            {
+        let body = {}
+        if (password === null) {
+            body = { username: username, firstname: firstname, lastname: lastname, email: email }
+        } else {
+            body = {
                 username: username,
                 firstname: firstname,
                 lastname: lastname,
                 email: email,
                 password: password,
-            },
-            {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
             }
-        )
+        }
+
+        await userService.patch(`API/user/${id}/update`, body, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                Accept: 'application/json',
+            },
+        })
     },
 
     deleteUser: (id) => {

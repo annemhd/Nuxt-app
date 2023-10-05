@@ -71,10 +71,6 @@ const disabled = computed(() =>
         : true
 )
 
-watch(username.value, (newX) => {
-    console.log(`x is ${newX}`)
-})
-
 const validEmail = (email) => {
     const regex =
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -83,6 +79,14 @@ const validEmail = (email) => {
 const validPassword = (password) => {
     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
     return regex.test(password)
+}
+
+const openNotification = () => {
+    ElNotification({
+        title: 'Modification réussie',
+        message: 'Tes informations ont bien été modifiés',
+        type: 'success',
+    })
 }
 
 const submitForm = async () => {
@@ -115,6 +119,7 @@ const submitForm = async () => {
                 password.value
             )
             Cookies.remove('user')
+            openNotification()
             setTimeout(async () => {
                 const secret = 'xxx'
                 /*if (password.value !== null) {

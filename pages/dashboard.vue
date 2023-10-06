@@ -1,8 +1,35 @@
 <template>
-    <div class="flex items-center gap-4 justify-between mb-6">
+    <div class="flex items-center gap-4 justify-between mb-12">
         <span class="text-4xl"> {{ salutation }} {{ currentUser.firstname }} ! </span>
-        <AddArticleDialog @refresh="refreshArticles()" />
     </div>
+
+    <div class="flex items-center gap-4 justify-between mb-6">
+        <AddArticleDialog @refresh="refreshArticles()" />
+        <div class="flex flex-row gap-3">
+            <span class="w-64">
+                <el-input placeholder="Recherche" />
+            </span>
+
+            <el-button type="primary" @click="drawer = true" link>
+                Filtrer<Icon name="material-symbols:filter-list-rounded" size="16" class="ml-2"
+            /></el-button>
+
+            <el-drawer v-model="drawer" title="Filter les articles">
+                <div class="flex flex-col p-4">
+                    <p class="mb-3">Trier par</p>
+                    <el-radio-group v-model="radio">
+                        <el-radio label="1">Plus récents</el-radio>
+                        <el-radio label="2" class="w-full">Plus anciens</el-radio>
+                        <el-radio label="3">Alphabetique A - B</el-radio>
+                        <el-radio label="4">Alphabetique B - A</el-radio>
+                        <el-radio label="5">Prix croissant</el-radio>
+                        <el-radio label="6" class="w-full">Prix décroissant</el-radio>
+                    </el-radio-group>
+                </div>
+            </el-drawer>
+        </div>
+    </div>
+
     <el-row :gutter="16">
         <el-col v-for="article in dataTest" :key="article" :span="6" class="mb-4">
             <el-card>
@@ -27,6 +54,7 @@ const cookie = useCookie('user')
 const token = cookie.value
 const currentUser = jwt_decode(token)
 const dataTest = ref([])
+const drawer = ref(false)
 
 onMounted(async () => {
     getArticles()

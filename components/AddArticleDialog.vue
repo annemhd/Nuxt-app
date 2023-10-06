@@ -1,5 +1,5 @@
 <template>
-    <el-button @click="openDialog = true">Ajouter un article</el-button>
+    <el-button type="primary" @click="openDialog = true">Ajouter un article</el-button>
     <el-dialog v-model="openDialog" title="Ajouter un article" width="400" :destroy-on-close="true">
         <p class="my-2">Titre</p>
         <el-input v-model="title" type="text" placeholder="Titre" class="mb-2" />

@@ -7,7 +7,7 @@
         <AddArticleDialog @refresh="refreshArticles()" />
         <div class="flex flex-row gap-3">
             <span class="w-64">
-                <el-input placeholder="Recherche" />
+                <el-input v-model="search" placeholder="Recherche" />
             </span>
 
             <el-button type="primary" @click="drawer = true" link>
@@ -31,7 +31,7 @@
     </div>
 
     <el-row :gutter="16">
-        <el-col v-for="article in dataTest" :key="article" :span="6" class="mb-4">
+        <el-col v-for="article in articlesList" :key="article" :span="6" class="mb-4">
             <el-card>
                 <div class="">
                     <div class="font-semibold">{{ article.title }}</div>
@@ -55,10 +55,26 @@ const token = cookie.value
 const currentUser = jwt_decode(token)
 const dataTest = ref([])
 const drawer = ref(false)
+const search = ref('')
 
 onMounted(async () => {
     getArticles()
 })
+
+watch(search, (newX) => {
+  search.value = newX
+  console.log(articlesList.value)
+})
+
+const articlesList = computed(() => {
+    if (search.value !== '') {
+        return dataTest.value.filter((item) => item.title.toLowerCase().includes(search.value))}
+    else {
+        return dataTest.value
+    }
+})
+
+
 
 const getArticles = async () => {
     const data = await Module.getArticles()

@@ -61,15 +61,17 @@ onMounted(async () => {
     getArticles()
 })
 
-watch(search, (newX) => {
-  search.value = newX
-  console.log(articlesList.value)
+watch(search, (newSearch) => {
+  search.value = newSearch
 })
 
 const articlesList = computed(() => {
     if (search.value !== '') {
-        return dataTest.value.filter((item) => item.title.toLowerCase().includes(search.value))}
-    else {
+        return dataTest.value.filter((item) =>
+        item.title.includes(search.value) ||
+        item.title.toLowerCase().includes(search.value) ||
+        item.title.toUpperCase().includes(search.value))
+    } else {
         return dataTest.value
     }
 })
@@ -134,8 +136,6 @@ const convertirMoisEnString = (mois) => {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-    }
-    &__content {
     }
 }
 </style>

@@ -18,13 +18,12 @@
                 <div class="flex flex-col p-4">
                     <p class="mb-3">Trier par</p>
                     <el-radio-group v-model="radio">
-                        <el-radio label="1">Plus récents</el-radio>
-                        <el-radio label="2" class="w-full">Plus anciens</el-radio>
-                        <el-radio label="3">Alphabetique A - B</el-radio>
-                        <el-radio label="4">Alphabetique B - A</el-radio>
-                        <el-radio label="5">Prix croissant</el-radio>
-                        <el-radio label="6" class="w-full">Prix décroissant</el-radio>
+                        <el-radio label="newest">Plus récents</el-radio>
+                        <el-radio label="oldest" class="w-full">Plus anciens</el-radio>
+                        <el-radio label="ascending price">Prix croissant</el-radio>
+                        <el-radio label="decreasing price" class="w-full">Prix décroissant</el-radio>
                     </el-radio-group>
+                    <el-button @click="test">confirm</el-button>
                 </div>
             </el-drawer>
         </div>
@@ -56,13 +55,15 @@ const currentUser = jwt_decode(token)
 const dataTest = ref([])
 const drawer = ref(false)
 const search = ref('')
+const radio = ref('newest')
 
 onMounted(async () => {
     getArticles()
 })
 
-watch(search, (newSearch) => {
+watch([search, () => radio], ([newSearch, newRadio]) => {
   search.value = newSearch
+  console.log(newRadio)
 })
 
 const articlesList = computed(() => {
@@ -76,10 +77,12 @@ const articlesList = computed(() => {
     }
 })
 
+const test = async () => {
 
+}
 
 const getArticles = async () => {
-    const data = await Module.getArticles()
+    const data = await Module.getArticles('newest')
     dataTest.value = data.filter((item) => item.id_user === currentUser.id_user)
 }
 

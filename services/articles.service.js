@@ -3,8 +3,13 @@ import axios from 'axios'
 const articleService = axios.create({ baseURL: 'http://localhost:8080' })
 
 export default {
-    getArticles: async () => {
-        const response = await articleService.get('API/articles')
+    getArticles: async (order) => {
+        let response = {}
+        if(order) {
+            response = await articleService.get(`API/articles/order/${order}`)
+        } else {
+            response = await articleService.get(`API/articles`)
+        }
         return response.data
     },
 

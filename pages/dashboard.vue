@@ -20,10 +20,10 @@
                     <el-radio-group v-model="radio">
                         <el-radio label="newest">Plus récents</el-radio>
                         <el-radio label="oldest" class="w-full">Plus anciens</el-radio>
-                        <el-radio label="ascending price">Prix croissant</el-radio>
-                        <el-radio label="decreasing price" class="w-full">Prix décroissant</el-radio>
+                        <el-radio label="priceasc">Prix croissant</el-radio>
+                        <el-radio label="pricedesc" class="w-full">Prix décroissant</el-radio>
                     </el-radio-group>
-                    <el-button @click="test">confirm</el-button>
+                    <el-button @click="confirmFilters">Valider</el-button>
                 </div>
             </el-drawer>
         </div>
@@ -38,8 +38,8 @@
                     <div class="text-sm">Le {{ handleDateFormat(article.created_at) }}</div>
                 </div>
                 <div class="flex flex-row gap-2">
-                    <DeleteArticleDialog :article-infos="article" @refresh="refreshArticles()" />
                     <UpdateArticleDialog :article-infos="article" @refresh="refreshArticles()" />
+                    <DeleteArticleDialog :article-infos="article" @refresh="refreshArticles()" />
                 </div>
             </el-card>
         </el-col>
@@ -48,6 +48,9 @@
 <script setup>
 import jwt_decode from 'jwt-decode'
 import Module from '/services/articles.service.js'
+import AddArticleDialog from '/components/articles/AddArticleDialog.vue'
+import UpdateArticleDialog from '/components/articles/UpdateArticleDialog.vue'
+import DeleteArticleDialog from '/components/articles/DeleteArticleDialog.vue'
 
 const cookie = useCookie('user')
 const token = cookie.value
@@ -58,36 +61,38 @@ const search = ref('')
 const radio = ref('newest')
 
 onMounted(async () => {
-    getArticles()
+    getArticles(radio.value)
 })
 
-watch([search, () => radio], ([newSearch, newRadio]) => {
-  search.value = newSearch
-  console.log(newRadio)
+watch([search, radio], ([newSearch, newRadio]) => {
+    search.value = newSearch
+    radio.value = newRadio
 })
 
 const articlesList = computed(() => {
     if (search.value !== '') {
-        return dataTest.value.filter((item) =>
-        item.title.includes(search.value) ||
-        item.title.toLowerCase().includes(search.value) ||
-        item.title.toUpperCase().includes(search.value))
+        return dataTest.value.filter(
+            (item) =>
+                item.title.includes(search.value) ||
+                item.title.toLowerCase().includes(search.value) ||
+                item.title.toUpperCase().includes(search.value)
+        )
     } else {
         return dataTest.value
     }
 })
 
-const test = async () => {
-
+const confirmFilters = () => {
+    refreshArticles()
 }
 
 const getArticles = async () => {
-    const data = await Module.getArticles('newest')
+    const data = await Module.getArticles(radio.value)
     dataTest.value = data.filter((item) => item.id_user === currentUser.id_user)
 }
 
 const refreshArticles = async () => {
-    const data = await Module.getArticles()
+    const data = await Module.getArticles(radio.value)
     dataTest.value = data.filter((item) => item.id_user === currentUser.id_user)
     setTimeout(() => {
         getArticles()

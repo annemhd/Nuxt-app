@@ -10,22 +10,11 @@
                 <el-input v-model="search" placeholder="Recherche" />
             </span>
 
-            <el-button type="primary" @click="drawer = true" link>
-                Filtrer<Icon name="material-symbols:filter-list-rounded" size="16" class="ml-2"
-            /></el-button>
-
-            <el-drawer v-model="drawer" title="Filter les articles">
-                <div class="flex flex-col p-4">
-                    <p class="mb-3">Trier par</p>
-                    <el-radio-group v-model="radio">
-                        <el-radio label="newest">Plus récents</el-radio>
-                        <el-radio label="oldest" class="w-full">Plus anciens</el-radio>
-                        <el-radio label="priceasc">Prix croissant</el-radio>
-                        <el-radio label="pricedesc" class="w-full">Prix décroissant</el-radio>
-                    </el-radio-group>
-                    <el-button @click="confirmFilters">Valider</el-button>
-                </div>
-            </el-drawer>
+            <ArticlesFilters
+                v-model="filters"
+                @refresh="confirmFilters"
+                @update:model-value="handleFilters"
+            />
         </div>
     </div>
 
@@ -52,22 +41,30 @@ import AddArticleDialog from '/components/articles/AddArticleDialog.vue'
 import UpdateArticleDialog from '/components/articles/UpdateArticleDialog.vue'
 import DeleteArticleDialog from '/components/articles/DeleteArticleDialog.vue'
 
+useHead({
+    title: 'The Ficus - Tableau de bord',
+    meta: [{ name: 'description', content: 'My amazing site.' }],
+})
+
 const cookie = useCookie('user')
 const token = cookie.value
 const currentUser = jwt_decode(token)
 const dataTest = ref([])
-const drawer = ref(false)
+
+const filters = ref('')
 const search = ref('')
-const radio = ref('newest')
+
+const heure = new Date().getHours()
 
 onMounted(async () => {
-    getArticles(radio.value)
+    getArticles()
 })
 
-watch([search, radio], ([newSearch, newRadio]) => {
+watch([search], ([newSearch]) => {
     search.value = newSearch
-    radio.value = newRadio
 })
+
+const salutation = computed(() => (heure >= 5 && heure < 12 ? 'Bonsoir' : 'Bonjour'))
 
 const articlesList = computed(() => {
     if (search.value !== '') {
@@ -82,17 +79,13 @@ const articlesList = computed(() => {
     }
 })
 
-const confirmFilters = () => {
-    refreshArticles()
-}
-
 const getArticles = async () => {
-    const data = await Module.getArticles(radio.value)
+    const data = await Module.getArticles(filters.value)
     dataTest.value = data.filter((item) => item.id_user === currentUser.id_user)
 }
 
 const refreshArticles = async () => {
-    const data = await Module.getArticles(radio.value)
+    const data = await Module.getArticles(filters.value)
     dataTest.value = data.filter((item) => item.id_user === currentUser.id_user)
     setTimeout(() => {
         getArticles()
@@ -109,14 +102,6 @@ const handleDateFormat = (date) => {
         dateTime.getFullYear()
     )
 }
-
-const heure = new Date().getHours()
-const salutation = computed(() => (heure >= 5 && heure < 12 ? 'Bonsoir' : 'Bonjour'))
-
-useHead({
-    title: 'The Ficus - Tableau de bord',
-    meta: [{ name: 'description', content: 'My amazing site.' }],
-})
 
 const convertirMoisEnString = (mois) => {
     const moisEnString = [
@@ -135,6 +120,14 @@ const convertirMoisEnString = (mois) => {
     ]
 
     return moisEnString[mois]
+}
+
+const handleFilters = async (value) => {
+    filters.value = value
+}
+
+const confirmFilters = () => {
+    refreshArticles()
 }
 </script>
 <style lang="scss">

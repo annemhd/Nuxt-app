@@ -9,7 +9,6 @@
             <span class="w-64">
                 <el-input v-model="search" placeholder="Recherche" />
             </span>
-
             <ArticlesFilters
                 v-model="filters"
                 @refresh="confirmFilters"
@@ -51,7 +50,7 @@ const token = cookie.value
 const currentUser = jwt_decode(token)
 const dataTest = ref([])
 
-const filters = ref('')
+const filters = ref('newest')
 const search = ref('')
 
 const heure = new Date().getHours()

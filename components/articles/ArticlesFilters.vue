@@ -12,7 +12,7 @@
                 <el-radio label="priceasc">Prix croissant</el-radio>
                 <el-radio label="pricedesc" class="w-full">Prix décroissant</el-radio>
             </el-radio-group>
-            <el-button @click="confirmFilters">Valider</el-button>
+            <el-button class="mt-4" @click="confirmFilters">Valider</el-button>
         </div>
     </el-drawer>
 </template>

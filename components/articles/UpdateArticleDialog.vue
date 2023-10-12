@@ -21,7 +21,7 @@
             class="mb-2"
             :rows="6"
             :autosize="false"
-            :resize="none"
+            resize="none"
         />
         <p class="my-2">prix</p>
         <el-input v-model="price" type="text" placeholder="Prix" class="mb-2" />

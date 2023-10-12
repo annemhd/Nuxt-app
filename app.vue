@@ -7,7 +7,7 @@
             <el-main>
                 <NuxtPage />
             </el-main>
-            <el-footer> Bas de page </el-footer>
+            <el-footer></el-footer>
         </client-only>
     </div>
 </template>

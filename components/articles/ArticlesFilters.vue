@@ -4,14 +4,17 @@
     /></el-button>
 
     <el-drawer v-model="drawer" title="Filter les articles">
-        <div class="flex flex-col p-4">
-            <p class="mb-3">Trier par</p>
-            <el-radio-group v-model="radio">
-                <el-radio label="newest">Plus récents</el-radio>
-                <el-radio label="oldest" class="w-full">Plus anciens</el-radio>
-                <el-radio label="priceasc">Prix croissant</el-radio>
-                <el-radio label="pricedesc" class="w-full">Prix décroissant</el-radio>
-            </el-radio-group>
+        <div class="flex flex-col justify-between h-full p-4">
+            <div>
+                <p class="mb-3">Trier par</p>
+                <el-radio-group v-model="radio">
+                    <el-radio label="newest">Plus récents</el-radio>
+                    <el-radio label="oldest" class="w-full">Plus anciens</el-radio>
+                    <el-radio label="priceasc">Prix croissant</el-radio>
+                    <el-radio label="pricedesc" class="w-full">Prix décroissant</el-radio>
+                </el-radio-group>
+            </div>
+
             <el-button class="mt-4" @click="confirmFilters">Valider</el-button>
         </div>
     </el-drawer>

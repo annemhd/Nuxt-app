@@ -20,9 +20,11 @@
     <el-row :gutter="16">
         <el-col v-for="article in articlesList" :key="article" :span="6" class="mb-4">
             <el-card>
-                <div class="">
+                <div class="flex flex-col gap-1">
                     <div class="font-semibold">{{ article.title }}</div>
-                    <div class="">{{ article.description }}</div>
+                    <!-- <p class="paragraph">
+                        {{ article.description }}
+                    </p> -->
                     <div class="text-sm">Le {{ handleDateFormat(article.created_at) }}</div>
                 </div>
                 <div class="flex flex-row gap-2">
@@ -131,11 +133,24 @@ const confirmFilters = () => {
 </script>
 <style lang="scss">
 .el-card {
+    height: 100%;
     &__body {
-        min-height: 150px !important;
+        height: 100%;
         display: flex;
+        gap: 24px;
         flex-direction: column;
         justify-content: space-between;
+
+        .paragraph {
+            overflow: hidden;
+            max-height: 8rem;
+            -webkit-box-orient: vertical;
+            display: block;
+            display: -webkit-box;
+            overflow: hidden !important;
+            text-overflow: ellipsis;
+            -webkit-line-clamp: 4;
+        }
     }
 }
 </style>

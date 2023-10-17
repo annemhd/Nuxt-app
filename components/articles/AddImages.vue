@@ -51,6 +51,10 @@ const handleRemove = (file) => {
 
 const handlePictureCardPreview = (file) => {
     dialogImageUrl.value = file.url
+    const formData = new FormData()
+    formData.append('file', file.url, 'myImage.jpg')
+    console.log(formData)
+    console.log(file.url)
     emit('update:model-value', file.url)
 }
 

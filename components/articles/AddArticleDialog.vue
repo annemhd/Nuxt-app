@@ -30,6 +30,11 @@
 </template>
 <script setup>
 import Module from '/services/articles.service.js'
+import {
+    getImages,
+    uploadImage,
+} from '/Users/amichaud/Documents/GitHub/Nuxt-UI/services/files.services.js'
+
 import jwt_decode from 'jwt-decode'
 
 const cookie = useCookie('user')
@@ -63,6 +68,8 @@ const addArticle = async () => {
                 price.value,
                 status
             )
+            console.log(imgUrls.value[0].url)
+            uploadImage(imgUrls.value[0].url)
             emit('refresh')
             openDialog.value = false
         } catch (e) {

@@ -13,28 +13,26 @@ export const findImage = (name) => {
 }
 
 export const uploadImage = (file) => {
-    console.log(file)
-    const formData = new FormData()
-    formData.append('file', file, 'myImage.jpg')
-    console.log(formData)
-    // fileService
-    //     .post(
-    //         'ASSETS/upload',
-    //         {
-    //             formData,
-    //         },
-    //         {
-    //             headers: {
-    //                 'Content-Type': 'multipart/form-data',
-    //             },
-    //         }
-    //     )
-    //     .then((response) => {
-    //         console.log(response)
-    //     })
-    //     .catch((error) => {
-    //         console.error('Error sending Blob:', error)
-    //     })
+    const fd = new FormData()
+    fd.append('file', file)
+
+    fileService
+        .post(
+            'ASSETS/upload',
+                fd
+            ,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            }
+        )
+        .then((response) => {
+            console.log(response)
+        })
+        .catch((error) => {
+            console.error('Error sending Blob:', error)
+        })
 }
 
 const updateUser = async (id, username, firstname, lastname, email, password) => {

@@ -1,5 +1,5 @@
 <template>
-    <el-upload
+   <!-- <el-upload
         action="#"
         list-type="picture-card"
         :auto-upload="false"
@@ -34,7 +34,9 @@
                 </span>
             </div>
         </template>
-    </el-upload>
+    </el-upload> -->
+
+    <input type="file" @change="test"  multiple />
 </template>
 <script setup>
 import { Delete, Download, Plus, ZoomIn } from '@element-plus/icons-vue'
@@ -50,15 +52,16 @@ const handleRemove = (file) => {
 }
 
 const handlePictureCardPreview = (file) => {
-    dialogImageUrl.value = file.url
-    const formData = new FormData()
-    formData.append('file', file.url, 'myImage.jpg')
-    console.log(formData)
-    console.log(file.url)
-    emit('update:model-value', file.url)
+
 }
 
 const handleDownload = (file) => {
     console.log(file)
+}
+
+const test = (e) => {
+    dialogImageUrl.value = [...e.target.files]
+    emit('update:model-value', dialogImageUrl.value)
+    console.log(e.target.files)
 }
 </script>

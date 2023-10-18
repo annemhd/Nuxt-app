@@ -37,10 +37,10 @@
 </template>
 <script setup>
 import jwt_decode from 'jwt-decode'
-import Module from '/services/articles.service.js'
-import AddArticleDialog from '/components/articles/AddArticleDialog.vue'
-import UpdateArticleDialog from '/components/articles/UpdateArticleDialog.vue'
-import DeleteArticleDialog from '/components/articles/DeleteArticleDialog.vue'
+import Module from '@/services/articles.service.js'
+import AddArticleDialog from '@/components/articles/AddArticleDialog.vue'
+import UpdateArticleDialog from '@/components/articles/UpdateArticleDialog.vue'
+import DeleteArticleDialog from '@/components/articles/DeleteArticleDialog.vue'
 
 useHead({
     title: 'The Ficus - Tableau de bord',

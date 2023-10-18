@@ -29,11 +29,10 @@
     </el-dialog>
 </template>
 <script setup>
-import Module from '/services/articles.service.js'
+import Module from '@/services/articles.service.js'
 import {
-    getImages,
-    uploadImage,
-} from '/Users/amichaud/Documents/GitHub/Nuxt-UI/services/files.services.js'
+    uploadImage
+} from '@/services/files.services.js'
 
 import jwt_decode from 'jwt-decode'
 
@@ -59,7 +58,6 @@ const addArticle = async () => {
 
     !errors.value.length ? true : false
     if (errors.value.length === 0) {
-        try {
             const status = switchRef.value
             Module.createArticle(
                 currentUser.id_user,
@@ -68,18 +66,17 @@ const addArticle = async () => {
                 price.value,
                 status
             )
-            console.log(imgUrls.value[0].url)
-            uploadImage(imgUrls.value[0].url)
+            imgUrls.value.forEach((file) =>
+                uploadImage(file)
+            )
             emit('refresh')
             openDialog.value = false
-        } catch (e) {
-            console.log('error !')
-        }
     }
 }
 
 const handleImgUrls = (e) => {
-    urlsList.value.push({ url: e })
-    imgUrls.value = [...urlsList.value]
+    // urlsList.value.push(e)
+    // imgUrls.value = [...urlsList.value]
+    imgUrls.value = e
 }
 </script>

@@ -27,16 +27,11 @@ export const uploadImage = (file) => {
                 },
             }
         )
-        .then((response) => {
-            console.log(response)
-        })
-        .catch((error) => {
-            console.error('Error sending Blob:', error)
-        })
 }
 
-const updateUser = async (id, username, firstname, lastname, email, password) => {
+/*export const updateUser = async (id, username, firstname, lastname, email, password) => {
     let body = {}
+
     if (password === null) {
         body = { username: username, firstname: firstname, lastname: lastname, email: email }
     } else {
@@ -55,7 +50,7 @@ const updateUser = async (id, username, firstname, lastname, email, password) =>
             Accept: 'application/json',
         },
     })
-}
+}*/
 
 export const deleteUser = (name) => {
     fileService.delete(`ASSETS/file/${name}`)

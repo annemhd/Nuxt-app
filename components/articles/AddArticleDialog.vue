@@ -74,9 +74,7 @@ const addArticle = async () => {
     }
 }
 
-const handleImgUrls = (e) => {
-    // urlsList.value.push(e)
-    // imgUrls.value = [...urlsList.value]
-    imgUrls.value = e
+const handleImgUrls = (value) => {
+    imgUrls.value = value
 }
 </script>

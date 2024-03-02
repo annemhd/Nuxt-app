@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <AppHeader />
+    <navbar />
     <slot />
-    <AppFooter />
-  </div>
 </template>
+<script setup>
+import navbar from '~/components/navigation/navbar.vue'
+</script>

@@ -1,1 +1,3 @@
-<template>index</template>
+<template>
+    <NuxtLink to="/authentification">auth</NuxtLink>
+</template>

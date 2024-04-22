@@ -1,1 +1,1 @@
-<template>error</template>
+<template>error page</template>

@@ -1,19 +1,27 @@
 <template>
-    <div class="m-4">
-        <client-only>
-            <el-header>
-                <Navbar />
-            </el-header>
-            <el-main>
-                <NuxtPage />
-            </el-main>
-            <el-footer></el-footer>
-        </client-only>
-    </div>
+    <NuxtLayout :name="layout">
+        <NuxtPage />
+    </NuxtLayout>
+    <UNotifications />
+    <UModals />
 </template>
 <script setup>
-useHead({
-    title: 'The Ficus',
-    meta: [{ name: 'description', content: 'My amazing site.' }],
+import { findUser } from '~/services/users.services'
+import { jwtDecode } from 'jwt-decode'
+
+const route = useRoute()
+const layout = computed(() => (route.name === 'authentification' ? 'authentification' : 'default'))
+
+const userId = JSON.parse(localStorage.getItem('user_id') ?? null)
+const currentUser = ref({})
+
+const getUser = async () => {
+    const data = await findUser(userId)
+    currentUser.value = data
+}
+
+onMounted(async () => {
+    await getUser()
+    localStorage.setItem('user_info', JSON.stringify(currentUser.value))
 })
 </script>

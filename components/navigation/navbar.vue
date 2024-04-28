@@ -39,6 +39,7 @@
                     color="gray"
                     variant="ghost"
                     activeClass="text-primary-500 hover:text-primary-500 font-semibold"
+                    :ui="{ rounded: 'rounded-full' }"
                     to="/market"
                     >Marché</UButton
                 >
@@ -46,6 +47,7 @@
                     color="gray"
                     variant="ghost"
                     activeClass="text-primary-500 hover:text-primary-500 font-semibold"
+                    :ui="{ rounded: 'rounded-full' }"
                     to="/community"
                     >Communauté</UButton
                 >
@@ -56,6 +58,7 @@
                     icon="i-heroicons-outline-tag"
                     color="primary"
                     :ui="{ rounded: 'rounded-full' }"
+                    to="/add-item"
                     >Publier</UButton
                 >
                 <UButton
@@ -133,6 +136,7 @@
 <script setup>
 const token = localStorage.getItem('jwt_token')
 const user = JSON.parse(localStorage.getItem('user_info'))
+const route = useRoute()
 
 const items = [
     [

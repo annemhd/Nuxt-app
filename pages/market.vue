@@ -76,7 +76,7 @@
             <span class="text-zinc-500 text-sm">{{ object.length }} articles</span>
         </div>
     </div>
-    <div class="grid grid-cols-6 gap-8">
+    <div class="grid grid-cols-6 gap-x-8 gap-y-6">
         <UCard v-for="obj in object" :ui="uiConfig">
             <template #header>
                 <UAvatar size="2xs" src="" alt="Avatar" class="mr-2" />
